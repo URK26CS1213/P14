@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medihive Quiz</title>
+<style>
+body{
+    background:violet;
+    font-family:Arial, sans-serif;
+    margin:0;
+}
+.quiz-container{
+    background:white;
+    width:350px;
+    margin:100px auto;
+    padding:25px;
+    text-align:center;
+    border-radius:15px;
+    border:3px solid lightblue;
+    box-sizing:border-box;
+}
+h2{
+    color:purple;
+    margin-top:0;
+}
+h3{
+    font-size:16px;
+}
+.option{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    background:lavender;
+    border:1px solid purple;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+}
+.option:hover{
+    background:lightblue;
+}
+button{
+    background:purple;
+    color:white;
+    padding:10px 25px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+}
+#result{
+    min-height:20px;
+}
+</style>
+</head>
+<body>
+<div class="quiz-container">
+<h2>Medihive Quiz</h2>
+<h3 id="question"></h3>
+<div id="options"></div>
+<p id="result"></p>
+<button type="button" id="nextBtn">Next</button>
+</div>
+<script>
+var questions = [
+    {
+        question: "Which Medihive service allows you to consult a doctor online?",
+        options: ["Telemedicine", "Online Consultation", "Pharmacy", "Laboratory"],
+        answer: "Telemedicine"
+    }
+];
+var currentQuestion = 0;
+
+function loadQuestion(){
+    var q = questions[currentQuestion];
+    document.getElementById("question").textContent = q.question;
+    document.getElementById("result").textContent = "";
+    var optionsDiv = document.getElementById("options");
+    optionsDiv.textContent = "";
+    q.options.forEach(function(option){
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option";
+        btn.textContent = option;
+        btn.addEventListener("click", function(){
+            checkAnswer(option);
+        });
+        optionsDiv.appendChild(btn);
+    });
+}
+
+function checkAnswer(answer){
+    if(answer === questions[currentQuestion].answer){
+        document.getElementById("result").textContent = "Correct Answer!";
+    } else {
+        document.getElementById("result").textContent = "Wrong Answer! Try again.";
+    }
+}
+
+function nextQuestion(){
+    document.getElementById("result").textContent = "Quiz Completed!";
+    document.getElementById("options").textContent = "";
+    document.getElementById("question").textContent = "Thank you for playing!";
+}
+
+document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+loadQuestion();
+</script>
+</body>
+</html>
